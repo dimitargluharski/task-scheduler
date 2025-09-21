@@ -89,7 +89,7 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col bg-slate-50 min-h-dvh py-1">
+    <div className="bg-slate-50 min-h-dvh py-1">
       <div className="w-4xl mx-auto flex flex-col gap-1">
 
         <div className="flex gap-1">
@@ -129,15 +129,18 @@ function App() {
 
         <TaskCounter length={tasks.length} />
 
-        {data.map((task: Task) => (
-          <TaskItem
-            id={task.id}
-            status={task.status}
-            priority={task.taskPriority ?? ""}
-            title={task.title}
-            comments={task.comments}
-          />
-        ))}
+        <div className={`${activeViewType === 'list' ? 'flex flex-col' : 'grid grid-cols-3'}`}>
+          {data.map((task: Task) => (
+            <TaskItem
+              activeView={activeViewType}
+              id={task.id}
+              status={task.status}
+              priority={task.taskPriority ?? ""}
+              title={task.title}
+              comments={task.comments}
+            />
+          ))}
+        </div>
       </div>
     </div >
   )
