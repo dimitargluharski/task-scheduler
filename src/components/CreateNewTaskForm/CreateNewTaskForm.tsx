@@ -2,6 +2,7 @@ import { FaRegFloppyDisk } from "react-icons/fa6"
 import { Button } from "../Button/Button"
 import { Dropdown } from "../Doprdown/Dropdown"
 import { TextInput } from "../TextInput/TextInput"
+import { IoMdClose } from "react-icons/io";
 
 type NewTaskFormProps = {
   text: string;
@@ -15,7 +16,17 @@ type NewTaskFormProps = {
 export const CreateNewTaskForm = ({ text, handleOnChangeTextValue, closeForm, saveNewTask, handleOnChangeSavePriorityLevel, priorityLevel }: NewTaskFormProps) => {
   return (
     <div className="flex flex-col gap-1">
-      <h2 className="px-1 italic">Create new task</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="px-1 italic">Create new task</h2>
+
+        <span
+          className="hover:cursor-pointer bg-red-600 text-slate-50 rounded-sm hover:bg-red-500"
+          onClick={closeForm}
+          title="Close task form"
+        >
+          <IoMdClose className="w-5 h-5" />
+        </span>
+      </div>
 
       <TextInput
         inputType="text"
@@ -40,6 +51,6 @@ export const CreateNewTaskForm = ({ text, handleOnChangeTextValue, closeForm, sa
 
         <FaRegFloppyDisk className="w-4 h-4" />
       </Button>
-    </div>
+    </div >
   )
 }
