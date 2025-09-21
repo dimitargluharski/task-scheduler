@@ -42,19 +42,13 @@ const tasks: Task[] = [
   },
 ];
 
-const priorities = [
-  { id: 1, priorityLevel: 'high' },
-  { id: 2, priorityLevel: 'medium' },
-  { id: 3, priorityLevel: 'low' }
-];
-
 function App() {
   const [data, setData] = useState<Task[]>(tasks);
   const [isFormVisible, setIsVisibleForm] = useState<boolean>(false);
   const [activeViewType, setActiveViewType] = useState<string>('list');
   const [createNewTaskText, setCreateNewTaskText] = useState<string>('');
   const [query, setQuery] = useState<string>('');
-  const [priority, setPriority] = useState<string>('');
+  const [priorityLevel, setPriorityLevel] = useState('');
 
   const handleToggleModalVisibility = () => {
     setIsVisibleForm(!isFormVisible);
@@ -72,7 +66,7 @@ function App() {
     setQuery(event.target.value);
   }
 
-  const handleSaveNewTask = (newTask: string) => {
+  const handleSaveNewTask = (newTask: string, priorityLevel: string) => {
     setData((prevData) => [
       ...prevData,
       {
@@ -82,15 +76,16 @@ function App() {
         date: new Date().toISOString().split("T")[0],
         comments: [],
         taskAuthor: "admin",
-        // taskPriority: 
+        taskPriority: `${priorityLevel}`
       }
     ]);
 
     setCreateNewTaskText('');
-  }
+    setPriorityLevel('');
+  };
 
-  const handleOnChangeDropdownPriority = (choise: string) => {
-    console.log('', choise)
+  const handleOnChangeSavePriorityLevel = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setPriorityLevel(event.target.value);
   }
 
   return (
@@ -122,9 +117,9 @@ function App() {
             text={createNewTaskText}
             handleOnChangeTextValue={handleCreateNewTask}
             saveNewTask={handleSaveNewTask}
-            // priorities={priorities}
-            priorities={priorities}
-            handleOnChangeDropdownPriority={handleOnChangeDropdownPriority}
+            closeForm={handleToggleModalVisibility}
+            handleOnChangeSavePriorityLevel={handleOnChangeSavePriorityLevel}
+            priorityLevel={priorityLevel}
           />}
 
         <ButtonsLayoutView

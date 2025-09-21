@@ -3,21 +3,16 @@ import { Button } from "../Button/Button"
 import { Dropdown } from "../Doprdown/Dropdown"
 import { TextInput } from "../TextInput/TextInput"
 
-type Priorities = {
-  id: number;
-  priorityLevel: string;
-}
-
 type NewTaskFormProps = {
   text: string;
   handleOnChangeTextValue: (event: React.ChangeEvent<HTMLInputElement>) => void;
   closeForm: () => void;
-  saveNewTask: (task: string) => void;
-  priorities: Priorities[];
-  handleOnChangeDropdownPriority: (text: string) => void;
+  saveNewTask: (task: string, priorityLevel: string) => void;
+  handleOnChangeSavePriorityLevel: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  priorityLevel: string;
 }
 
-export const CreateNewTaskForm = ({ text, handleOnChangeTextValue, closeForm, saveNewTask, priorities, handleOnChangeDropdownPriority }: NewTaskFormProps) => {
+export const CreateNewTaskForm = ({ text, handleOnChangeTextValue, closeForm, saveNewTask, handleOnChangeSavePriorityLevel, priorityLevel }: NewTaskFormProps) => {
   return (
     <div className="flex flex-col gap-1">
       <h2 className="px-1 italic">Create new task</h2>
@@ -30,12 +25,12 @@ export const CreateNewTaskForm = ({ text, handleOnChangeTextValue, closeForm, sa
         onChange={handleOnChangeTextValue}
       />
 
-      <Dropdown priorities={priorities} handleOnChangeDropdownPriority={handleOnChangeDropdownPriority} />
+      <Dropdown handleOnChangeSavePriorityLevel={handleOnChangeSavePriorityLevel} priorityLevel={priorityLevel} />
 
       <Button classNames={`p-2 bg-green-600 rounded-sm flex justify-center gap-1 items-center text-slate-50 hover:cursor-pointer hover:bg-green-500 ${text.length >= 3 ? '' : 'bg-slate-600 text-slate-500 hover:bg-slate-600'}`}
         handler={() => {
           closeForm();
-          saveNewTask(text);
+          saveNewTask(text, priorityLevel);
         }}
         disabled={text.length >= 3 ? false : true}
       >
